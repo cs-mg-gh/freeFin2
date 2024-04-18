@@ -1,35 +1,57 @@
 package com.example.freefin2;
 
 import androidx.appcompat.app.AppCompatActivity;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    private EditText usernameEditText, passwordEditText;
     private Button loginButton;
+    private Button createAccountButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        usernameEditText = findViewById(R.id.editTextUsername);
-        passwordEditText = findViewById(R.id.editTextPassword);
+        // Check if User is Already Logged In
+        if (isLoggedIn()) {
+            // User is already logged in. Redirect to LandingPageActivity
+            Intent intent = new Intent(MainActivity.this, LandingPageActivity.class);
+            startActivity(intent);
+            finish(); // Finish MainActivity so user can't go back to it
+        }
+
+        // Setup UI Elements
         loginButton = findViewById(R.id.buttonLogin);
+        createAccountButton = findViewById(R.id.buttonCreateAccount);
 
-        loginButton.setOnClickListener(view -> {
-            String username = usernameEditText.getText().toString();
-            String password = passwordEditText.getText().toString();
+        // Set OnClickListeners for buttons
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Start LoginActivity
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            }
+        });
 
-            // Replace "admin" and "admin" with your actual username and password logic
-            if ("admin".equals(username) && "admin".equals(password)) {
-                Toast.makeText(MainActivity.this, "Login successful", Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(MainActivity.this, "Invalid credentials", Toast.LENGTH_LONG).show();
+        createAccountButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Start CreateAccountActivity
+                startActivity(new Intent(MainActivity.this, CreateAccountActivity.class));
             }
         });
     }
+
+    private boolean isLoggedIn() {
+        SharedPreferences sharedPreferences = getSharedPreferences("UserLogin", MODE_PRIVATE);
+        return sharedPreferences.getBoolean("LoggedIn", false);
+    }
+}
 }
