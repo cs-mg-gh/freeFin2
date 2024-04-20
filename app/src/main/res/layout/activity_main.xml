@@ -11,11 +11,11 @@
         android:id="@+id/textViewAppName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/freefinn"
-        android:textSize="60sp"
+        android:layout_marginBottom="20dp"
         android:background="@color/black"
+        android:text="@string/freefinn"
         android:textColor="@color/white"
-        android:layout_marginBottom="20dp"/>
+        android:textSize="60sp" />
 
     <Button
         android:id="@+id/buttonLogin"

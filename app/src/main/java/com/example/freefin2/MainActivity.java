@@ -9,29 +9,32 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.freefin2.databinding.ActivityMainBinding;
+
 public class MainActivity extends AppCompatActivity {
+com.example.freefin2.databinding.ActivityMainBinding binding;
+    public static final String TAG= "FreeFin";
 
     private Button loginButton;
     private Button createAccountButton;
 
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        binding = com.example.freefin2.databinding.ActivityMainBinding.inflate(getLayoutInflater())
+        setContentView(binding.getRoot());
 
-        // Check if User is Already Logged In
         if (isLoggedIn()) {
-            // User is already logged in. Redirect to LandingPageActivity
+
             Intent intent = new Intent(MainActivity.this, LandingPageActivity.class);
             startActivity(intent);
-            finish(); // Finish MainActivity so user can't go back to it
+            finish();
         }
 
-        // Setup UI Elements
+
         loginButton = findViewById(R.id.buttonLogin);
         createAccountButton = findViewById(R.id.buttonCreateAccount);
 
-        // Set OnClickListeners for buttons
+
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

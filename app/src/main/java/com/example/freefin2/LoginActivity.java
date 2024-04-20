@@ -31,7 +31,6 @@ public class LoginActivity extends AppCompatActivity {
         String username = usernameEditText.getText().toString();
         String password = passwordEditText.getText().toString();
 
-        // Replace "admin" and "admin" with your actual username and password logic
         if ("admin".equals(username) && "admin".equals(password)) {
             Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_LONG).show();
         } else {
