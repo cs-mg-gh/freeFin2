@@ -7,9 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.freefin2.databinding.ActivityMainBinding;
+//import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 com.example.freefin2.databinding.ActivityMainBinding binding;
@@ -20,7 +18,7 @@ com.example.freefin2.databinding.ActivityMainBinding binding;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = com.example.freefin2.databinding.ActivityMainBinding.inflate(getLayoutInflater())
+        binding = com.example.freefin2.databinding.ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         if (isLoggedIn()) {
@@ -33,7 +31,6 @@ com.example.freefin2.databinding.ActivityMainBinding binding;
 
         loginButton = findViewById(R.id.buttonLogin);
         createAccountButton = findViewById(R.id.buttonCreateAccount);
-
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
