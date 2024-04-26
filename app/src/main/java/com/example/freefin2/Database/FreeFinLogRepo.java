@@ -13,17 +13,38 @@ import android.util.Log;
 public class FreeFinLogRepo {
     private FreeFinDao freefinDAO;
     private ArrayList<FreeFinUser> allLogs;
-    public FreeFinLogRepo(Application application){
+    private static FreeFinLogRepo repository;
+    private FreeFinLogRepo(Application application){
         FreeFinDatabase db = FreeFinDatabase.getDatabase(application);
         this.freefinDAO = db.freefinDAO();
-        this.allLogs= this.freefinDAO.getAllRecords();
+        this.allLogs= (ArrayList<FreeFinUser>) this.freefinDAO.getAllRecords();
+    }
+    public static FreeFinLogRepo getRepository(Application application){
+        if(repository!=null){
+            return repository;
+        }
+        Future<FreeFinLogRepo> future = FreeFinDatabase.databaseWriteExecutor.submit(
+                        new Callable<FreeFinLogRepo>(){
+
+                            @Override
+                            public FreeFinLogRepo call() throws Exception {
+                                return new FreeFinLogRepo(application);
+                            }
+                        }
+        );
+        try{
+            return future.get();
+        }catch(InterruptedException | ExecutionException e){
+            Log.d(MainActivity.TAG,"Problem getting Repo, Thread error.");
+        }
+        return null;
     }
     public ArrayList<FreeFinUser> getAllLogs(){
         Future<ArrayList<FreeFinUser>> future= FreeFinDatabase.databaseWriteExecutor.submit(
                 new Callable<ArrayList<FreeFinUser>>() {
                     @Override
                     public ArrayList<FreeFinUser> call() throws Exception {
-                        return freefinDAO.getAllRecords();
+                        return (ArrayList<FreeFinUser>) freefinDAO.getAllRecords();
                     }
                 }
         );

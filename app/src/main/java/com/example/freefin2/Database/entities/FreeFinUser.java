@@ -6,7 +6,6 @@ import androidx.room.PrimaryKey;
 import com.example.freefin2.Database.FreeFinDao;
 import com.example.freefin2.Database.FreeFinDatabase;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Objects;

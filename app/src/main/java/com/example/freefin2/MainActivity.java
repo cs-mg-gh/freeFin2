@@ -7,19 +7,22 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-//import androidx.appcompat.app.AppCompatActivity;
+import com.example.freefin2.Database.FreeFinLogRepo;
 
 public class MainActivity extends AppCompatActivity {
 com.example.freefin2.databinding.ActivityMainBinding binding;
     public static final String TAG= "FreeFin";
-
+    private Object repository;
     private Button loginButton;
     private Button createAccountButton;
+    //private Object FreeFinLogRepo;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = com.example.freefin2.databinding.ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        repository = FreeFinLogRepo.getRepository(getApplication());
 
         if (isLoggedIn()) {
 
