@@ -7,14 +7,17 @@ import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.freefin2.Database.entities.FreeFinUser;
+import com.example.freefin2.Database.typeConverters.LocalDateTypeConverter;
 import com.example.freefin2.MainActivity;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+@TypeConverters(LocalDateTypeConverter.class)
 @Database(entities={FreeFinUser.class}, version = 1,exportSchema = false)
 public abstract class FreeFinDatabase extends RoomDatabase {
     private static final String DATABASE_NAME ="FreeFin_database";

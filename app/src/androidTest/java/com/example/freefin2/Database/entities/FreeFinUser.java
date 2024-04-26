@@ -1,6 +1,5 @@
 package com.example.freefin2.Database.entities;
 
-import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -8,6 +7,7 @@ import com.example.freefin2.Database.FreeFinDao;
 import com.example.freefin2.Database.FreeFinDatabase;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -18,10 +18,13 @@ public class FreeFinUser implements FreeFinDao {
     private String username;
     private String password;
     private boolean admin;
+    private LocalDateTime date;
 
-    public FreeFinUser(boolean admin) {
+    public FreeFinUser(String username, String password, boolean admin) {
+        this.username = username;
+        this.password = password;
         this.admin = admin;
-        LocalDate date = LocalDate.now();
+        this.date= LocalDateTime.now();
     }
 
     @Override
@@ -29,12 +32,20 @@ public class FreeFinUser implements FreeFinDao {
         if (this == o) return true;
         if (!(o instanceof FreeFinUser)) return false;
         FreeFinUser that = (FreeFinUser) o;
-        return admin == that.admin && Objects.equals(username, that.username) && Objects.equals(password, that.password);
+        return admin == that.admin && Objects.equals(username, that.username) && Objects.equals(password, that.password) && Objects.equals(date, that.date);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(username, password, admin);
+        return Objects.hash(username, password, admin, date);
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
     }
 
     public boolean isAdmin() {
