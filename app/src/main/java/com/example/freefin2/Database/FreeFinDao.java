@@ -7,12 +7,16 @@ import androidx.room.Query;
 
 import com.example.freefin2.Database.entities.FreeFinUser;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Dao
 public interface FreeFinDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(FreeFinDao log);
+    void insert(FreeFinUser log);
+
     @Query("Select * from " + FreeFinDatabase.FreeFinTable)
     List<FreeFinUser> getAllRecords();
+
+    //void insert(FreeFinUser freefin);
 }

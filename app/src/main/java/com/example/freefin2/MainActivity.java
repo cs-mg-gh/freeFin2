@@ -12,7 +12,7 @@ import com.example.freefin2.Database.FreeFinLogRepo;
 public class MainActivity extends AppCompatActivity {
 com.example.freefin2.databinding.ActivityMainBinding binding;
     public static final String TAG= "FreeFin";
-    private Object repository;
+    private FreeFinLogRepo repository;
     private Button loginButton;
     private Button createAccountButton;
     //private Object FreeFinLogRepo;
@@ -51,7 +51,6 @@ com.example.freefin2.databinding.ActivityMainBinding binding;
             }
         });
     }
-
     private boolean isLoggedIn() {
         SharedPreferences sharedPreferences = getSharedPreferences("UserLogin", MODE_PRIVATE);
         return sharedPreferences.getBoolean("LoggedIn", false);

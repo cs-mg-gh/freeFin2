@@ -2,7 +2,7 @@ package com.example.freefin2.Database.entities;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-
+import java.util.*;
 import com.example.freefin2.Database.FreeFinDao;
 import com.example.freefin2.Database.FreeFinDatabase;
 
@@ -11,19 +11,26 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 @Entity(tableName = FreeFinDatabase.FreeFinTable)
-public class FreeFinUser implements FreeFinDao {
-    @PrimaryKey(autoGenerate = true)
+public  class FreeFinUser implements FreeFinDao{
 
+ //implements FreeFinDao {
+    @PrimaryKey(autoGenerate = true)
+    private int id;
     private String username;
     private String password;
     private boolean admin;
     private LocalDateTime date;
 
-    public FreeFinUser(String username, String password, boolean admin) {
+    private void insert() {
+
+    }
+
+    public FreeFinUser(String username, String password, boolean admin, int id) {
         this.username = username;
         this.password = password;
         this.admin = admin;
-        this.date= LocalDateTime.now();
+        this.id = id;
+        date= LocalDateTime.now();
     }
 
     @Override
@@ -31,12 +38,20 @@ public class FreeFinUser implements FreeFinDao {
         if (this == o) return true;
         if (!(o instanceof FreeFinUser)) return false;
         FreeFinUser that = (FreeFinUser) o;
-        return admin == that.admin && Objects.equals(username, that.username) && Objects.equals(password, that.password) && Objects.equals(date, that.date);
+        return id == that.id && admin == that.admin && Objects.equals(username, that.username) && Objects.equals(password, that.password) && Objects.equals(date, that.date);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(username, password, admin, date);
+        return Objects.hash(id, username, password, admin, date);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public LocalDateTime getDate() {
@@ -72,12 +87,14 @@ public class FreeFinUser implements FreeFinDao {
     }
 
     @Override
-    public void insert(FreeFinDao log) {
+    public void insert(FreeFinUser log) {
 
     }
 
-    @Override
+    //@Override
     public ArrayList<FreeFinUser> getAllRecords() {
         return null;
     }
+
+
 }
