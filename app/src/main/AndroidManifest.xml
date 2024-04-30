@@ -14,10 +14,10 @@
         >
         <activity
             android:name=".CreateAccountActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".LandingPageActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".LoginActivity"
             android:exported="false" />
