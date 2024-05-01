@@ -18,11 +18,6 @@ public  class FreeFinUser {
     private String password;
     private boolean isAdmin;
     private LocalDateTime date;
-
-    private void insert() {
-
-    }
-
     public FreeFinUser(String username, String password) {
         this.username = username;
         this.password = password;

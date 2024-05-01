@@ -21,5 +21,4 @@ public interface FreeFinDao {
     @Query("DELETE FROM " + FreeFinDatabase.FreeFinTable)
     void deleteAll();
 
-    //void insert(FreeFinUser[] freefin);
 }

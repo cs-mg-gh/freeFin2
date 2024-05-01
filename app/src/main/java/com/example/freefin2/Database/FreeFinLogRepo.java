@@ -12,7 +12,7 @@ import java.util.concurrent.Future;
 import android.util.Log;
 public class FreeFinLogRepo {
     private FreeFinDao freefinDAO;
-    private ArrayList<FreeFinUser> allUsers;
+    private  ArrayList<FreeFinUser> allUsers;
     private static FreeFinLogRepo repository;
     private FreeFinLogRepo(Application application){
         FreeFinDatabase db = FreeFinDatabase.getDatabase(application);
@@ -39,6 +39,11 @@ public class FreeFinLogRepo {
         }
         return null;
     }
+
+    public static void setRepository(FreeFinLogRepo repository) {
+        FreeFinLogRepo.repository = repository;
+    }
+
     public ArrayList<FreeFinUser> getAllLogs(){
         Future<ArrayList<FreeFinUser>> future= FreeFinDatabase.databaseWriteExecutor.submit(
                 new Callable<ArrayList<FreeFinUser>>() {
@@ -62,5 +67,13 @@ public class FreeFinLogRepo {
         {
             freefinDAO.insert(user);
         });
+    }
+
+    public ArrayList<FreeFinUser> getAllUsers() {
+        return allUsers;
+    }
+
+    public void setAllUsers(ArrayList<FreeFinUser> allUsers) {
+        this.allUsers = allUsers;
     }
 }
