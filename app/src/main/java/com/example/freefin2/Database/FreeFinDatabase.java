@@ -18,10 +18,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @TypeConverters(LocalDateTypeConverter.class)
-@Database(entities={FreeFinUser.class}, version = 1,exportSchema = false)
+@Database(entities={FreeFinUser.class}, version = 6,exportSchema = false)
 public abstract class FreeFinDatabase extends RoomDatabase {
-    private static final String DATABASE_NAME ="FreeFin_database";
     public static final String FreeFinTable = "FreeFinTable";
+    private static final String DATABASE_NAME ="FreeFinDatabase";
     private static volatile FreeFinDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS =4;
     static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
@@ -48,6 +48,17 @@ public abstract class FreeFinDatabase extends RoomDatabase {
         public void onCreate(@NonNull SupportSQLiteDatabase db){
             super.onCreate(db);
             Log.i(MainActivity.TAG,"Database is created!");
+            databaseWriteExecutor.execute(()->{
+                FreeFinDao dao =INSTANCE.freefinDAO();
+                dao.deleteAll();
+                FreeFinUser admin = new FreeFinUser("admin","admin1");
+                admin.setAdmin(true);
+                dao.insert(admin);
+
+                FreeFinUser testUser1 = new FreeFinUser("testuser1","testuser1");
+                dao.insert(testUser1);
+
+            });
         }
     };
     public abstract FreeFinDao freefinDAO();

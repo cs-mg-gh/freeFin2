@@ -2,8 +2,7 @@ package com.example.freefin2.Database.entities;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-import java.util.*;
-import com.example.freefin2.Database.FreeFinDao;
+
 import com.example.freefin2.Database.FreeFinDatabase;
 
 import java.time.LocalDateTime;
@@ -11,25 +10,23 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 @Entity(tableName = FreeFinDatabase.FreeFinTable)
-public  class FreeFinUser implements FreeFinDao{
-
+public  class FreeFinUser {
  //implements FreeFinDao {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String username;
     private String password;
-    private boolean admin;
+    private boolean isAdmin;
     private LocalDateTime date;
 
     private void insert() {
 
     }
 
-    public FreeFinUser(String username, String password, boolean admin, int id) {
+    public FreeFinUser(String username, String password) {
         this.username = username;
         this.password = password;
-        this.admin = admin;
-        this.id = id;
+        isAdmin =false;
         date= LocalDateTime.now();
     }
 
@@ -38,12 +35,12 @@ public  class FreeFinUser implements FreeFinDao{
         if (this == o) return true;
         if (!(o instanceof FreeFinUser)) return false;
         FreeFinUser that = (FreeFinUser) o;
-        return id == that.id && admin == that.admin && Objects.equals(username, that.username) && Objects.equals(password, that.password) && Objects.equals(date, that.date);
+        return id == that.id && isAdmin == that.isAdmin && Objects.equals(username, that.username) && Objects.equals(password, that.password) && Objects.equals(date, that.date);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, password, admin, date);
+        return Objects.hash(id, username, password, isAdmin, date);
     }
 
     public int getId() {
@@ -63,11 +60,11 @@ public  class FreeFinUser implements FreeFinDao{
     }
 
     public boolean isAdmin() {
-        return admin;
+        return isAdmin;
     }
 
     public void setAdmin(boolean admin) {
-        this.admin = admin;
+        this.isAdmin = admin;
     }
 
     public String getUsername() {
@@ -84,11 +81,6 @@ public  class FreeFinUser implements FreeFinDao{
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    @Override
-    public void insert(FreeFinUser log) {
-
     }
 
     //@Override
