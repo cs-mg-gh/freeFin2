@@ -1,5 +1,6 @@
 package com.example.freefin2.Database;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 
 import androidx.room.Delete;
@@ -11,14 +12,18 @@ import com.example.freefin2.Database.entities.FreeFinUser;
 import java.util.List;
 @Dao
 public interface FreeFinDao {
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(FreeFinUser... user);
     @Delete
     void delete(FreeFinUser user);
 
     @Query("Select * from " + FreeFinDatabase.FreeFinTable + " ORDER BY username ")
-    List<FreeFinUser> getAllUsers();
+    LiveData<List<FreeFinUser>> getAllUsers();
     @Query("DELETE FROM " + FreeFinDatabase.FreeFinTable)
     void deleteAll();
-
+    @Query("SELECT * FROM " + FreeFinDatabase.FreeFinTable+" WHERE username == :username")
+    LiveData<FreeFinUser> getUserByUsername(String username);
+    @Query("SELECT * FROM " + FreeFinDatabase.FreeFinTable+" WHERE id == :userId")
+    LiveData<FreeFinUser> getUserById(int userId);
 }

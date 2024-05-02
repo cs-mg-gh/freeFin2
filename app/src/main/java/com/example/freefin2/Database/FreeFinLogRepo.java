@@ -6,74 +6,50 @@ import com.example.freefin2.Database.entities.FreeFinUser;
 import com.example.freefin2.MainActivity;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import android.util.Log;
+
+import androidx.lifecycle.LiveData;
+
 public class FreeFinLogRepo {
-    private FreeFinDao freefinDAO;
-    private  ArrayList<FreeFinUser> allUsers;
-    private static FreeFinLogRepo repository;
+    private final FreeFinDao freefinDAO;
+    private static volatile FreeFinLogRepo repository; // Use volatile for thread-safe singleton
+    private final LiveData<List<FreeFinUser>> allUsers;
+
     private FreeFinLogRepo(Application application){
         FreeFinDatabase db = FreeFinDatabase.getDatabase(application);
-        this.freefinDAO = db.freefinDAO();
-        this.allUsers= (ArrayList<FreeFinUser>) this.freefinDAO.getAllUsers();
+        freefinDAO = db.freefinDAO();
+        allUsers = freefinDAO.getAllUsers(); // This should be LiveData
     }
+
     public static FreeFinLogRepo getRepository(Application application){
-        if(repository!=null){
-            return repository;
-        }
-        Future<FreeFinLogRepo> future = FreeFinDatabase.databaseWriteExecutor.submit(
-                        new Callable<FreeFinLogRepo>(){
-
-                            @Override
-                            public FreeFinLogRepo call() throws Exception {
-                                return new FreeFinLogRepo(application);
-                            }
-                        }
-        );
-        try{
-            return future.get();
-        }catch(InterruptedException | ExecutionException e){
-            Log.d(MainActivity.TAG,"Problem getting Repo, Thread error.");
-        }
-        return null;
-    }
-
-    public static void setRepository(FreeFinLogRepo repository) {
-        FreeFinLogRepo.repository = repository;
-    }
-
-    public ArrayList<FreeFinUser> getAllLogs(){
-        Future<ArrayList<FreeFinUser>> future= FreeFinDatabase.databaseWriteExecutor.submit(
-                new Callable<ArrayList<FreeFinUser>>() {
-                    @Override
-                    public ArrayList<FreeFinUser> call() throws Exception {
-                        return (ArrayList<FreeFinUser>) freefinDAO.getAllUsers();
-                    }
+        if (repository == null) {
+            synchronized (FreeFinLogRepo.class) {
+                if (repository == null) {
+                    repository = new FreeFinLogRepo(application);
                 }
-        );
-        try{
-            return future.get();
-        }catch (InterruptedException | ExecutionException e){
-            e.printStackTrace();
-            Log.i(MainActivity.TAG,"Problem in executor!");
+            }
         }
-    return null;
+        return repository;
     }
 
-    public void insertUser(FreeFinUser... user){
-        FreeFinDatabase.databaseWriteExecutor.execute(()->
-        {
-            freefinDAO.insert(user);
-        });
-    }
-
-    public ArrayList<FreeFinUser> getAllUsers() {
+    public LiveData<List<FreeFinUser>> getAllUsers() {
         return allUsers;
     }
 
-    public void setAllUsers(ArrayList<FreeFinUser> allUsers) {
-        this.allUsers = allUsers;
+    public void insertUser(FreeFinUser... users){
+        FreeFinDatabase.databaseWriteExecutor.execute(() -> {
+            freefinDAO.insert(users);
+        });
+    }
+
+    public LiveData<FreeFinUser> getUserByUsername(String username) {
+        return freefinDAO.getUserByUsername(username); // Assuming DAO method returns LiveData
+    }
+    public LiveData<FreeFinUser> getUserById(int userId) {
+        return freefinDAO.getUserById(userId); // Assuming DAO method returns LiveData
     }
 }
