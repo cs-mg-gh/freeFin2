@@ -4,12 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:backgroundTint="#76e393">
+
+    <TextView
+        android:id="@+id/textViewAppName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/black"
+        android:text="@string/freefinn"
+        android:textColor="@color/white"
+        android:textSize="60sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/editTextUsername"
-        android:layout_width="95dp"
-        android:layout_height="48dp"
+        android:layout_width="135dp"
+        android:layout_height="57dp"
         android:layout_marginTop="120dp"
         android:ems="20"
         android:hint="@string/username"
@@ -20,8 +33,8 @@
 
     <EditText
         android:id="@+id/editTextPassword"
-        android:layout_width="95dp"
-        android:layout_height="48dp"
+        android:layout_width="134dp"
+        android:layout_height="55dp"
         android:layout_marginTop="16dp"
         android:ems="20"
         android:hint="@string/password"
@@ -32,12 +45,28 @@
 
     <Button
         android:id="@+id/buttonLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="187dp"
+        android:layout_height="100dp"
         android:layout_marginTop="20dp"
-        android:text="@string/login"
+        android:backgroundTint="#de7df0"
+        android:text="@string/loginn"
+        android:textSize="40sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
+
+    <Button
+        android:id="@+id/buttonCreateAccount"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:backgroundTint="#de7df0"
+        android:text="@string/create_account"
+        android:textSize="40sp"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+
+        app:layout_constraintTop_toBottomOf="@+id/buttonLogin" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

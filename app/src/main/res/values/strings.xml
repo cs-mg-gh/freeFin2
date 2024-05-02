@@ -6,4 +6,8 @@
     <string name="freefinn">FreeFinn</string>
     <string name="loginn">Login</string>
     <string name="create_account">Create Account</string>
+    <string name="passwordd">Password</string>
+    <string name="usernamee">Username</string>
+    <string name="t">Create_Account</string>
+    <string name="sign_up">Sign Up!</string>
 </resources>

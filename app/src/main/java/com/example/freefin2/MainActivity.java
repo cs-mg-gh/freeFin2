@@ -68,20 +68,21 @@ com.example.freefin2.databinding.ActivityMainBinding binding;
     private void loginUser() {
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(SHARED_PREFERENCE_USERID_KEY,Context.MODE_PRIVATE);
         loggedInUserId = sharedPreferences.getInt(SHARED_PREFERENCE_USERID_VALUE,LOGGED_OUT);
-        if(loggedInUserId != LOGGED_OUT){
-           return;
+
+        if (loggedInUserId != LOGGED_OUT) {
+            LiveData<FreeFinUser> userObserver = repository.getUserById(loggedInUserId);
+            userObserver.observe(this, this::updateUser); // Handling user update in a method
         }
-         loggedInUserId = getIntent().getIntExtra(MAIN_ACTIVITY_USER_ID, LOGGED_OUT);
-        if(loggedInUserId == LOGGED_OUT){
-            return;
-        }
-        LiveData<FreeFinUser> userObserver = repository.getUserById(loggedInUserId);
-        userObserver.observe(this,user ->{
-            if(user!=null){
-                invalidateOptionsMenu();
-                }
-            });
+
     }
+
+    private void updateUser(FreeFinUser newUser) {
+        user = newUser;
+        if (user != null) {
+            invalidateOptionsMenu(); // This will trigger onPrepareOptionsMenu
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
@@ -92,14 +93,22 @@ com.example.freefin2.databinding.ActivityMainBinding binding;
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem item = menu.findItem(R.id.logoutMenuItem);
-        item.setVisible(true);
-        item.setTitle(user.getUsername());
+        if (user != null) {
+            item.setVisible(true);
+            item.setTitle(user.getUsername());
+        } else {
+            item.setVisible(false);
+        }
         item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(@NonNull MenuItem item) {
+                if (user == null) {
+                    Toast.makeText(MainActivity.this, "No user logged in", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
                 Toast.makeText(MainActivity.this, "Logout coming", Toast.LENGTH_SHORT).show();
                 showLogoutDialog();
-                return false;
+                return true;
             }
         });
         return true;
@@ -142,8 +151,4 @@ com.example.freefin2.databinding.ActivityMainBinding binding;
         intent.putExtra(MAIN_ACTIVITY_USER_ID, userId);
         return intent;
     }
-    //private boolean isLoggedIn() {
-        //SharedPreferences sharedPreferences = getSharedPreferences("UserLogin", MODE_PRIVATE);
-        //return sharedPreferences.getBoolean("LoggedIn", false);
-   // }
 }

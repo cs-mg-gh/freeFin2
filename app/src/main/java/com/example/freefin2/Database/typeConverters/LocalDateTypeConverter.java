@@ -6,6 +6,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.Date;
 
 public class LocalDateTypeConverter {
     @TypeConverter
@@ -18,4 +19,5 @@ public class LocalDateTypeConverter {
         Instant instant = Instant.ofEpochMilli(epochMilli);
         return LocalDateTime.ofInstant(instant,ZoneId.systemDefault());
     }
+
 }

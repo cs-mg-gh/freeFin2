@@ -10,6 +10,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.example.freefin2.Database.entities.Bills;
 import com.example.freefin2.Database.entities.FreeFinUser;
 import com.example.freefin2.Database.typeConverters.LocalDateTypeConverter;
 import com.example.freefin2.MainActivity;
@@ -18,9 +19,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @TypeConverters(LocalDateTypeConverter.class)
-@Database(entities={FreeFinUser.class}, version = 1,exportSchema = false)
+@Database(entities={FreeFinUser.class, Bills.class}, version = 4,exportSchema = false)
 public abstract class FreeFinDatabase extends RoomDatabase {
     public static final String FreeFinTable = "FreeFinTable";
+    public static final String BillsTable ="BillsTable";
     private static final String DATABASE_NAME ="FreeFinDatabase";
     private static volatile FreeFinDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS =4;
@@ -62,4 +64,6 @@ public abstract class FreeFinDatabase extends RoomDatabase {
         }
     };
     public abstract FreeFinDao freefinDAO();
+
+    public abstract BillsDAO billsDAO();
 }

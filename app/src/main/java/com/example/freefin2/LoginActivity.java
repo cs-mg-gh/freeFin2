@@ -41,6 +41,14 @@ public class LoginActivity extends AppCompatActivity {
                 verifyUser();
             }
         });
+        Button createAccountButton = findViewById(R.id.buttonCreateAccount);
+        createAccountButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, CreateAccountActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 private void verifyUser(){
     String username= binding.editTextUsername.getText().toString();

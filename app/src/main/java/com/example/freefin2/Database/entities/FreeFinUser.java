@@ -11,7 +11,6 @@ import java.util.Objects;
 
 @Entity(tableName = FreeFinDatabase.FreeFinTable)
 public  class FreeFinUser {
- //implements FreeFinDao {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String username;
