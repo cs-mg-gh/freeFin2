@@ -23,15 +23,14 @@ import com.example.freefin2.Database.entities.FreeFinUser;
 
 public class MainActivity extends AppCompatActivity {
     //private static final String SAVED_INSTANCE_STATE_USERID_KEY = ;
-    com.example.freefin2.databinding.ActivityMainBinding binding;
-
     public static String MAIN_ACTIVITY_USER_ID="com.example.freefin2.MAIN_ACTIVITY_USER_ID";
     static final String SHARED_PREFERENCE_USERID_KEY = "com.example.freefin2.SHARED_PREFERENCE_USERID_KEY";
     public static final String SAVED_INSTANCE_STATE_USERID_KEY = "com.example.freefin2.SAVED_INSTANCE_STATE_USERID_KEY";
+   // static final String SHARED_PREFERENCE_USERID_VALUE = "com.example.freefin2.SHARED_PREFERENCE_USERID_VALUE";
 
-    static final String SHARED_PREFERENCE_USERID_VALUE = "com.example.freefin2.SHARED_PREFERENCE_USERID_VALUE";
     public static final String TAG= "FreeFin";
     private FreeFinLogRepo repository;
+    com.example.freefin2.databinding.ActivityMainBinding binding;
     private Button createAccountButton;
     private int loggedInUserId = -1;
     private FreeFinUser user;
@@ -48,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
             startActivity(intent);
         }
+        updateSharedPreferences();
+
         repository = FreeFinLogRepo.getRepository(getApplication());
         Button loginButton = findViewById(R.id.buttonLogin);
         createAccountButton = findViewById(R.id.buttonCreateAccount);
@@ -72,11 +73,11 @@ public class MainActivity extends AppCompatActivity {
     private void loginUser( Bundle savedInstanceState) {
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(getString(R.string.preference_file_key),Context.MODE_PRIVATE);
 
-        if (sharedPreferences.contains(SHARED_PREFERENCE_USERID_VALUE)) {
+        //if (sharedPreferences.contains(SHARED_PREFERENCE_USERID_VALUE)) {
             loggedInUserId = sharedPreferences.getInt(getString(R.string.preference_usedId_key),LOGGED_OUT);
-            LiveData<FreeFinUser> userObserver = repository.getUserById(loggedInUserId);
-            userObserver.observe(this, this::updateUser); // Handling user update in a method
-        }
+            //LiveData<FreeFinUser> userObserver = repository.getUserById(loggedInUserId);
+            //userObserver.observe(this, this::updateUser); // Handling user update in a method
+        //}
         if (loggedInUserId == LOGGED_OUT & savedInstanceState != null && savedInstanceState.containsKey(SAVED_INSTANCE_STATE_USERID_KEY)) {
             loggedInUserId = savedInstanceState.getInt(SAVED_INSTANCE_STATE_USERID_KEY, LOGGED_OUT);
         }
@@ -91,12 +92,9 @@ public class MainActivity extends AppCompatActivity {
             this.user = user;
             if(this.user != null){
                 invalidateOptionsMenu();
-            }else {
-                logout();
             }
         });
     }
-
     private void updateUser(FreeFinUser newUser) {
         user = newUser;
         if (user != null) {
@@ -108,10 +106,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onSaveInstanceState(@Nullable Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(SAVED_INSTANCE_STATE_USERID_KEY, loggedInUserId);
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFERENCE_USERID_KEY, Context.MODE_PRIVATE);
-        SharedPreferences.Editor sharedPrefEditor = sharedPreferences.edit();
-        sharedPrefEditor.putInt(MainActivity.SHARED_PREFERENCE_USERID_KEY, loggedInUserId);
-        sharedPrefEditor.apply();
+        updateSharedPreferences();
 
     }
 

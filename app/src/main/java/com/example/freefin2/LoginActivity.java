@@ -51,35 +51,39 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 private void verifyUser(){
-
-    String username = binding.editTextUsername.getText().toString().trim(); // Trim to remove any leading/trailing whitespaces
-    if (username.isEmpty()) {
-        toastmaker("Username cannot be blank!");
-        return;
-    }
-
-    LiveData<FreeFinUser> userObserver = repository.getUserByUsername(username);
-    userObserver.observe(this, user -> {
-        if (user != null) {
-            String password = binding.editTextPassword.getText().toString();
-            if (password.equals(user.getPassword())) {
-                updateSharedPreferences(user.getId()); // Make sure this method accepts a userId and updates SharedPreferences correctly
-                startActivity(MainActivity.mainActivityIntentFactory(getApplicationContext(), user.getId()));
-            } else {
-                toastmaker("Invalid password");
-                binding.editTextPassword.setSelection(0, binding.editTextPassword.getText().length());
-            }
-        } else {
-            toastmaker(String.format("%s is not a valid username!", username));
-            binding.editTextUsername.setSelection(0, binding.editTextUsername.getText().length());
+        String username = binding.editTextUsername.getText().toString().trim();
+        if (username.isEmpty()) {
+            toastmaker("Username cannot be blank!");
+            return;
         }
-    });
+
+        LiveData<FreeFinUser> userObserver = repository.getUserByUsername(username);
+        userObserver.observe(this, user -> {
+            if (user != null) {
+                String password = binding.editTextPassword.getText().toString();
+                if (password.equals(user.getPassword())) {
+                    updateSharedPreferences(user.getId());
+                    navigateToLandingPage(user);
+                } else {
+                    toastmaker("Invalid password");
+                    binding.editTextPassword.setSelection(0, binding.editTextPassword.getText().length());
+                }
+            } else {
+                toastmaker(String.format("%s is not a valid username!", username));
+                binding.editTextUsername.setSelection(0, binding.editTextUsername.getText().length());
+            }
+        });
 }
+    private void navigateToLandingPage(FreeFinUser user) {
+        Intent intent = new Intent(this, LandingPageActivity.class);
+        intent.putExtra("user_id", user.getId());
+        startActivity(intent);
+    }
 
     private void updateSharedPreferences(int userId) {
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(MainActivity.SHARED_PREFERENCE_USERID_KEY, Context.MODE_PRIVATE);
         SharedPreferences.Editor sharedPrefEditor = sharedPreferences.edit();
-        sharedPrefEditor.putInt(MainActivity.SHARED_PREFERENCE_USERID_VALUE, userId);
+        sharedPrefEditor.putInt(getString(R.string.preference_usedId_key), userId);
         sharedPrefEditor.apply();
     }
 

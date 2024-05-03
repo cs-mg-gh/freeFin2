@@ -22,8 +22,10 @@ public interface FreeFinDao {
     LiveData<List<FreeFinUser>> getAllUsers();
     @Query("DELETE FROM " + FreeFinDatabase.FreeFinTable)
     void deleteAll();
-    @Query("SELECT * FROM " + FreeFinDatabase.FreeFinTable+" WHERE username == :username")
+    @Query("SELECT * FROM " + FreeFinDatabase.FreeFinTable+" WHERE username == :username ORDER BY date DESC")
     LiveData<FreeFinUser> getUserByUsername(String username);
     @Query("SELECT * FROM " + FreeFinDatabase.FreeFinTable+" WHERE id == :userId")
     LiveData<FreeFinUser> getUserById(int userId);
+    @Query("SELECT * FROM " + FreeFinDatabase.FreeFinTable+" WHERE id == :loggedInUserId")
+    LiveData<List<FreeFinUser>> getRecordsetUserId(int loggedInUserId);
 }

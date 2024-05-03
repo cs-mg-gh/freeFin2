@@ -4,14 +4,8 @@ import android.app.Application;
 
 import com.example.freefin2.Database.entities.Bills;
 import com.example.freefin2.Database.entities.FreeFinUser;
-import com.example.freefin2.MainActivity;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
-import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
@@ -64,5 +58,9 @@ public class FreeFinLogRepo {
         FreeFinDatabase.databaseWriteExecutor.execute(() -> {
             billsDAO.insert(bill);
         });
+    }
+
+    public LiveData<List<FreeFinUser>> getAllUsersbyId(int loggedInUserId) {
+        return freefinDAO.getRecordsetUserId(loggedInUserId);
     }
 }
