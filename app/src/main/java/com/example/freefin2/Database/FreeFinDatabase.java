@@ -1,5 +1,6 @@
 package com.example.freefin2.Database;
 
+import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
@@ -63,6 +64,15 @@ public abstract class FreeFinDatabase extends RoomDatabase {
             });
         }
     };
+        public static synchronized FreeFinDatabase getInstance(Context context) {
+            if (INSTANCE == null) {
+                INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
+                                FreeFinDatabase.class, "FreeFin_Database")
+                        .build();
+            }
+            return INSTANCE;
+        }
+
     public abstract FreeFinDao freefinDAO();
 
     public abstract BillsDAO billsDAO();

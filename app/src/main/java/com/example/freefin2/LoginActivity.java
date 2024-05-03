@@ -56,7 +56,6 @@ private void verifyUser(){
             toastmaker("Username cannot be blank!");
             return;
         }
-
         LiveData<FreeFinUser> userObserver = repository.getUserByUsername(username);
         userObserver.observe(this, user -> {
             if (user != null) {
