@@ -10,4 +10,6 @@
     <string name="usernamee">Username</string>
     <string name="t">Create_Account</string>
     <string name="sign_up">Sign Up!</string>
+    <string name="preference_file_key">FreefinnSharedPreferenceKey</string>
+    <string name="preference_usedId_key">FreefinnUserIDsharedpreferenceKey</string>
 </resources>
