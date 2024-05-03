@@ -40,7 +40,7 @@ public class FreeFinLogRepo {
 
     public void insertUser(FreeFinUser... users){
         FreeFinDatabase.databaseWriteExecutor.execute(() -> {
-            freefinDAO.insert(users);
+            freefinDAO.insertUser(users);
         });
     }
 

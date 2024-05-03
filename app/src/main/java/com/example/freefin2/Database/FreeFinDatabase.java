@@ -55,10 +55,10 @@ public abstract class FreeFinDatabase extends RoomDatabase {
                 dao.deleteAll();
                 FreeFinUser admin = new FreeFinUser("admin","admin1");
                 admin.setAdmin(true);
-                dao.insert(admin);
+                dao.insertUser(admin);
 
                 FreeFinUser testUser1 = new FreeFinUser("testuser1","testuser1");
-                dao.insert(testUser1);
+                dao.insertUser(testUser1);
 
             });
         }

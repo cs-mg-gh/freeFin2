@@ -14,7 +14,7 @@ import java.util.List;
 public interface FreeFinDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(FreeFinUser... user);
+    void insertUser(FreeFinUser... user);
     @Delete
     void delete(FreeFinUser user);
 

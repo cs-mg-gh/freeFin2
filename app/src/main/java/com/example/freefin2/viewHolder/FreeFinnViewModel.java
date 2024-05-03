@@ -1,28 +1,26 @@
 package com.example.freefin2.viewHolder;
 
-import android.app.Application;
-
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.example.freefin2.Database.FreeFinLogRepo;
+import com.example.freefin2.Database.FreeFinDatabase;
 import com.example.freefin2.Database.entities.FreeFinUser;
 
-import java.util.List;
-
 public class FreeFinnViewModel extends AndroidViewModel {
-    private FreeFinLogRepo repository;
+    private LiveData<FreeFinUser> user;
+    private FreeFinDatabase db;
 
-    private final LiveData<List<FreeFinUser>> allUsersbyId;
-
-    public FreeFinnViewModel (Application application, int userId){
-        super(application);
-        repository = FreeFinLogRepo.getRepository(application);
-        allUsersbyId = repository.getAllUsersbyId(userId);
-    }
-    public LiveData<List<FreeFinUser>> getAllUsersbyId(){
-        return allUsersbyId;
+    public FreeFinnViewModel(FreeFinDatabase db, String username) {
+        super();
+        this.db = db;
+        user = db.freefinDAO().getUserByUsername(username);
     }
 
+    public LiveData<FreeFinUser> getUser() {
+        return user;
+    }
 
+    public void insertUser(FreeFinUser user) {
+        new Thread(() -> db.freefinDAO().insertUser(user)).start();
+    }
 }
