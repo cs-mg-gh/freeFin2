@@ -11,6 +11,7 @@ import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.freefin2.Database.entities.FreeFinUser;
+import com.example.freefin2.Database.entities.Notifications;
 import com.example.freefin2.Database.typeConverters.LocalDateTypeConverter;
 import com.example.freefin2.MainActivity;
 
@@ -18,9 +19,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @TypeConverters(LocalDateTypeConverter.class)
-@Database(entities={FreeFinUser.class}, version = 1,exportSchema = false)
+@Database(entities={FreeFinUser.class, Notifications.class}, version = 2,exportSchema = false)
 public abstract class FreeFinDatabase extends RoomDatabase {
     private static final String DATABASE_NAME ="FreeFin_database";
+    public static final String NotificationsTable = "NotificationsTable";
     public static final String FreeFinTable = "FreeFinTable";
     private static volatile FreeFinDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS =4;
