@@ -22,11 +22,9 @@ import com.example.freefin2.Database.FreeFinLogRepo;
 import com.example.freefin2.Database.entities.FreeFinUser;
 
 public class MainActivity extends AppCompatActivity {
-    //private static final String SAVED_INSTANCE_STATE_USERID_KEY = ;
     public static String MAIN_ACTIVITY_USER_ID="com.example.freefin2.MAIN_ACTIVITY_USER_ID";
     static final String SHARED_PREFERENCE_USERID_KEY = "com.example.freefin2.SHARED_PREFERENCE_USERID_KEY";
     public static final String SAVED_INSTANCE_STATE_USERID_KEY = "com.example.freefin2.SAVED_INSTANCE_STATE_USERID_KEY";
-   // static final String SHARED_PREFERENCE_USERID_VALUE = "com.example.freefin2.SHARED_PREFERENCE_USERID_VALUE";
 
     public static final String TAG= "FreeFin";
     private FreeFinLogRepo repository;

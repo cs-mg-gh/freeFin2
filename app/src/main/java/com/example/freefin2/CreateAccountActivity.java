@@ -21,7 +21,6 @@ public class CreateAccountActivity extends AppCompatActivity {
     private EditText usernameEditText;
     private EditText passwordEditText;
     private FreeFinnViewModel viewModel;
-    private Button createButton; // Corrected variable name
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,25 +29,22 @@ public class CreateAccountActivity extends AppCompatActivity {
 
         usernameEditText = findViewById(R.id.editTextUsername);
         passwordEditText = findViewById(R.id.editTextPassword);
-        createButton = findViewById(R.id.CreateButton); // Corrected initialization
+        Button createButton = findViewById(R.id.CreateButton); // Corrected initialization
 
         // Initialize viewModel
         viewModel = new ViewModelProvider(this).get(FreeFinnViewModel.class);
 
-        createButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String username = usernameEditText.getText().toString().trim();
-                String password = passwordEditText.getText().toString();
+        createButton.setOnClickListener(v -> {
+            String username = usernameEditText.getText().toString().trim();
+            String password = passwordEditText.getText().toString();
 
-                if (username.isEmpty() || password.isEmpty()) {
-                    Toast.makeText(CreateAccountActivity.this, "Please enter both a username and password", Toast.LENGTH_LONG).show();
-                } else {
-                    FreeFinUser newUser = new FreeFinUser(username, password);
-                    viewModel.insertUser(newUser);
-                    Toast.makeText(CreateAccountActivity.this, "Account Created Successfully!", Toast.LENGTH_SHORT).show();
-                    navigateToLandingPage(); // Navigate to landing page after account creation
-                }
+            if (username.isEmpty() || password.isEmpty()) {
+                Toast.makeText(CreateAccountActivity.this, "Please enter both a username and password", Toast.LENGTH_LONG).show();
+            } else {
+                FreeFinUser newUser = new FreeFinUser(username, password);
+                viewModel.insertUser(newUser);
+                Toast.makeText(CreateAccountActivity.this, "Account Created Successfully!", Toast.LENGTH_SHORT).show();
+                navigateToLandingPage(); // Navigate to landing page after account creation
             }
         });
     }
@@ -56,7 +52,7 @@ public class CreateAccountActivity extends AppCompatActivity {
     private void navigateToLandingPage() {
         Intent intent = new Intent(CreateAccountActivity.this, LandingPageActivity.class);
         startActivity(intent);
-        finish(); // Optional: Finish this activity so it's not added to the back stack
+        //finish();
     }
 }
 

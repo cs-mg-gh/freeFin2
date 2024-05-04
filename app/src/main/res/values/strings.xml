@@ -12,4 +12,13 @@
     <string name="sign_up">Sign Up!</string>
     <string name="preference_file_key">FreefinnSharedPreferenceKey</string>
     <string name="preference_usedId_key">FreefinnUserIDsharedpreferenceKey</string>
+    <string name="account_balance">Account Balance</string>
+    <string name="_0_00">$0.00</string>
+    <string name="transaction_summary">Transaction Summary</string>
+    <string name="no_transactions_yet">No transactions yet</string>
+    <string name="update_balance">Update Balance</string>
+    <string name="view_goals">View Goals</string>
+    <string name="set_goal">Set Goal</string>
+    <string name="settings">Settings</string>
+    <string name="home">Home</string>
 </resources>

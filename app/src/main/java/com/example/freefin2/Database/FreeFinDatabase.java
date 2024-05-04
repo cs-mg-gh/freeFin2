@@ -20,7 +20,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @TypeConverters(LocalDateTypeConverter.class)
-@Database(entities={FreeFinUser.class, Bills.class}, version = 4,exportSchema = false)
+@Database(entities={FreeFinUser.class, Bills.class}, version = 1,exportSchema = false)
 public abstract class FreeFinDatabase extends RoomDatabase {
     public static final String FreeFinTable = "FreeFinTable";
     public static final String BillsTable ="BillsTable";

@@ -12,14 +12,10 @@ public class FreeFinnViewModel extends AndroidViewModel {
     private LiveData<FreeFinUser> user;
     private FreeFinDatabase db;
 
-    public FreeFinnViewModel(Application application, String username) {
+    public FreeFinnViewModel(Application application) {
         super(application);
         this.db = FreeFinDatabase.getInstance(application); // Get database instance from application context
-        user = db.freefinDAO().getUserByUsername(username);
-    }
-
-    public LiveData<FreeFinUser> getUser() {
-        return user;
+       // user = db.freefinDAO().getUserByUsername(username);
     }
 
     public void insertUser(FreeFinUser user) {
@@ -28,9 +24,9 @@ public class FreeFinnViewModel extends AndroidViewModel {
 
     public void createAccount(String username, String password) {
         // Assuming FreeFinUser has a constructor that takes username and password
-        FreeFinUser newUser = new FreeFinUser(username, password);
-
-        // Insert the new user into the database
+        FreeFinUser newUser;
+            newUser = new FreeFinUser(username, password);
+            // Insert the new user into the database
         insertUser(newUser);
     }
 }
