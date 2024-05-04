@@ -21,7 +21,7 @@ public class SetGoalActivity extends AppCompatActivity {
         editTextGoalTitle = findViewById(R.id.editTextGoalTitle);
         editTextGoalAmount = findViewById(R.id.editTextGoalAmount);
         editTextGoalDeadline = findViewById(R.id.editTextGoalDeadline);
-
+    //
         // Save Button
         Button buttonSaveGoal = findViewById(R.id.buttonSaveGoal);
         buttonSaveGoal.setOnClickListener(new View.OnClickListener() {
