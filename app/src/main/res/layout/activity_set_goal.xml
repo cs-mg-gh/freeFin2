@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Content Layout for Set Goal -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:gravity="center">
+
+        <!-- Title -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Set Goal"
+            android:textSize="24sp"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Goal Title -->
+        <EditText
+            android:id="@+id/editTextGoalTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Goal Title"
+            android:inputType="text"/>
+
+        <!-- Goal Amount -->
+        <EditText
+            android:id="@+id/editTextGoalAmount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Goal Amount"
+            android:inputType="numberDecimal"/>
+
+        <!-- Goal Deadline -->
+        <EditText
+            android:id="@+id/editTextGoalDeadline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Goal Deadline (YYYY-MM-DD)"
+            android:inputType="date"/>
+
+        <!-- Save Button -->
+        <Button
+            android:id="@+id/buttonSaveGoal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            android:layout_marginTop="16dp"/>
+
+        <!-- Cancel Button -->
+        <Button
+            android:id="@+id/buttonCancelGoal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:layout_marginTop="8dp"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
