@@ -29,4 +29,5 @@ public class FreeFinnViewModel extends AndroidViewModel {
             // Insert the new user into the database
         insertUser(newUser);
     }
+
 }
