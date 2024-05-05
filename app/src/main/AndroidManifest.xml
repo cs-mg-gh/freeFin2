@@ -33,6 +33,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".SetGoalActivity" />
+        <activity android:name=".ViewGoalsActivity" />
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".UpdateBalanceActivity" />
     </application>
 
 </manifest>
