@@ -17,27 +17,6 @@
         android:textColor="@color/white"
         android:textSize="60sp" />
 
-    <EditText
-        android:id="@+id/editTextUsername"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/usernamee"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:backgroundTint="@color/white"
-        android:layout_marginBottom="16dp"/>
-
-    <EditText
-        android:id="@+id/editTextPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/passwordd"
-        android:inputType="textPassword"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:backgroundTint="@color/white"
-        android:layout_marginBottom="16dp"/>
-
     <Button
         android:id="@+id/buttonLogin"
         android:layout_width="187dp"
@@ -49,10 +28,10 @@
 
     <Button
         android:id="@+id/buttonCreateAccount"
-        android:layout_width="220dp"
+        android:layout_width="205dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:backgroundTint="#de7df0"
         android:text="@string/create_account"
-        android:textSize="40sp" />
+        android:textSize="35sp" />
 </LinearLayout>
