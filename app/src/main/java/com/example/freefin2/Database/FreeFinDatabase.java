@@ -24,6 +24,8 @@ import java.util.concurrent.Executors;
 public abstract class FreeFinDatabase extends RoomDatabase {
     public static final String FreeFinTable = "FreeFinTable";
     public static final String BillsTable ="BillsTable";
+    public static final String NotificationsTable ="NotificationsTable";
+
     private static final String DATABASE_NAME ="FreeFinDatabase";
     private static volatile FreeFinDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS =4;

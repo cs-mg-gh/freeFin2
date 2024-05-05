@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.example.freefin2.Database.FreeFinDatabase;
+import com.example.freefin2.Database.entities.Bills;
 import com.example.freefin2.Database.entities.FreeFinUser;
 
 public class FreeFinnViewModel extends AndroidViewModel {
@@ -30,4 +31,6 @@ public class FreeFinnViewModel extends AndroidViewModel {
         insertUser(newUser);
     }
 
+    public void insertBill(Bills bill) {
+    }
 }

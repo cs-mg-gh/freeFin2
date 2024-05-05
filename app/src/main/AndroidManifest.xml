@@ -10,8 +10,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
-        >
+        android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
+        <activity
+            android:name=".NewBillsActivity"
+            android:exported="false" />
         <activity
             android:name=".CreateAccountActivity"
             android:exported="true" />

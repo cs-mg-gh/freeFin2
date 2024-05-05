@@ -20,9 +20,8 @@ public class Bills {
     private boolean isActive;
     private LocalDateTime lastPaidDate;
 
-    public Bills(int billId, int userId, double amount, LocalDateTime dueDate, boolean isActive, LocalDateTime lastPaidDate) {
+    public Bills(int billId, double amount, LocalDateTime dueDate, boolean isActive, LocalDateTime lastPaidDate) {
         this.billId = billId;
-        this.userId = userId;
         this.amount = amount;
         this.dueDate = dueDate;
         this.isActive = isActive;
