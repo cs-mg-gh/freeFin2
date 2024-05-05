@@ -46,5 +46,11 @@ public class LandingPageActivity extends AppCompatActivity {
                 startActivity(new Intent(LandingPageActivity.this, SettingsActivity.class));
             }
         });
+        findViewById(R.id.buttonUpdateBalance).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LandingPageActivity.this, UpdateBalanceActivity.class));
+            }
+        });
     }
 }

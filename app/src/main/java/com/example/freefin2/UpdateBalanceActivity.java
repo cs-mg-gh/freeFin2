@@ -8,12 +8,12 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Update;
 
-public class SettingsActivity extends AppCompatActivity {
+public class UpdateBalanceActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+        setContentView(R.layout.activity_update_balance);
 
         Button homeButton = findViewById(R.id.home_button);
         Button setGoalButton = findViewById(R.id.set_goal_button);
@@ -24,22 +24,23 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Perform action for the Home button
-                startActivity(new Intent(SettingsActivity.this, LandingPageActivity.class));
+                startActivity(new Intent(UpdateBalanceActivity.this, LandingPageActivity.class));
             }
         });
 
         setGoalButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SettingsActivity.this, SetGoalActivity.class));
+                startActivity(new Intent(UpdateBalanceActivity.this, SetGoalActivity.class));
             }
         });
 
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SettingsActivity.this, SettingsActivity.class));
+                startActivity(new Intent(UpdateBalanceActivity.this, SettingsActivity.class));
             }
         });
     }
 }
+
