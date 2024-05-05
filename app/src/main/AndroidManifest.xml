@@ -31,6 +31,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".SetGoalActivity" />
+        <activity android:name=".ViewGoalsActivity" />
+        <activity android:name=".SettingsActivity" />
     </application>
 
 </manifest>
