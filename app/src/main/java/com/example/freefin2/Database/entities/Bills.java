@@ -20,7 +20,7 @@ public class Bills {
     private boolean isActive;
     private LocalDateTime lastPaidDate;
 
-    public Bills(int billId, double amount, LocalDateTime dueDate, boolean isActive, LocalDateTime lastPaidDate) {
+    public Bills(double amount, LocalDateTime dueDate, boolean isActive, LocalDateTime lastPaidDate) {
         this.billId = billId;
         this.amount = amount;
         this.dueDate = dueDate;

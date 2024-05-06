@@ -28,4 +28,8 @@
     <string name="save" />
     <string name="enter_due_date" />
     <string name="enter_amount" />
+    <string name="current_amount">Current Amount</string>
+    <string name="savee">Save</string>
+    <string name="target_amount">Target Amount</string>
+    <string name="title">Title</string>
 </resources>

@@ -31,4 +31,6 @@ public interface NotificationsDAO {
 
     @Query("SELECT * FROM "+  FreeFinDatabase.NotificationsTable + " WHERE date <= :date")
     LiveData<List<Notifications>> getGoalsByDate(LocalDateTime date);
+    @Insert
+    void insert(Notifications notification);
 }

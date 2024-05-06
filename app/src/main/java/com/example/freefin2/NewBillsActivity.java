@@ -32,11 +32,13 @@ public class NewBillsActivity extends AppCompatActivity {
     private Switch isActiveSwitch;
     private Button saveButton;
     private DatePickerDialog datePickerDialog; // Declare as a class member
+    private FreeFinnViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_bills);
+        viewModel = new ViewModelProvider(this, new ViewModelProvider.AndroidViewModelFactory(getApplication())).get(FreeFinnViewModel.class);
 
         amountInput = findViewById(R.id.amountInput);
         dueDateInput = findViewById(R.id.dueDateInput);
@@ -53,35 +55,23 @@ public class NewBillsActivity extends AppCompatActivity {
 
     private void saveBill() {
         try {
-            // Parse the amount and ensure it's a valid double
             double amount = Double.parseDouble(amountInput.getText().toString());
-
-            // Parse the due date, ensuring the input matches expected format (handled by the date picker)
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             LocalDateTime dueDate = LocalDateTime.parse(dueDateInput.getText().toString(), formatter);
-
-            // Read the active status from the switch
             boolean isActive = isActiveSwitch.isChecked();
+            LocalDateTime lastPaidDate = null; // Assuming not used at creation
 
-            // Assuming that billId is auto-generated and lastPaidDate is null initially
-            int billId = 0; // Set to 0 or another mechanism if your DB auto-generates IDs
-            LocalDateTime lastPaidDate = null; // Set this as needed
-
-            // Create new bill object with all properties;
-            Bills bill = new Bills(billId, amount, dueDate, isActive, lastPaidDate);
-
-            // Use ViewModel to insert the bill into the database
-            FreeFinnViewModel viewModel = new ViewModelProvider(this).get(FreeFinnViewModel.class);
+            Bills bill = new Bills(amount, dueDate, isActive, lastPaidDate);
             viewModel.insertBill(bill);
 
-            finish(); // Close the activity after saving
+            Toast.makeText(this, "Bill saved successfully!", Toast.LENGTH_SHORT).show();
+            finish(); // Close the activity
         } catch (NumberFormatException e) {
             Toast.makeText(this, "Invalid amount entered", Toast.LENGTH_SHORT).show();
         } catch (DateTimeParseException e) {
-            Toast.makeText(this, "Invalid date entered", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Invalid date format", Toast.LENGTH_SHORT).show();
         }
     }
-
 
     private void initDatePicker() {
         // Get today's date

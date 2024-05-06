@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.example.freefin2.Database.entities.Bills;
 import com.example.freefin2.Database.entities.FreeFinUser;
+import com.example.freefin2.Database.entities.Notifications;
 
 import java.util.List;
 
@@ -12,7 +13,9 @@ import androidx.lifecycle.LiveData;
 public class FreeFinLogRepo {
     private final FreeFinDao freefinDAO;
     private final BillsDAO billsDAO;
-    private static volatile FreeFinLogRepo repository; // Use volatile for thread-safe singleton
+    private final NotificationsDAO notificationsDAO;
+    
+    public static volatile FreeFinLogRepo repository; // Use volatile for thread-safe singleton
     private final LiveData<List<FreeFinUser>> allUsers;
     private final LiveData<List<Bills>> allBills;
 
@@ -22,6 +25,7 @@ public class FreeFinLogRepo {
         billsDAO = db.billsDAO();
         allUsers = freefinDAO.getAllUsers(); // This should be LiveData
         allBills = billsDAO.getAllBillsOrderedByDueDate();
+        notificationsDAO = db.notificationsDAO();
     }
 
     public static FreeFinLogRepo getRepository(Application application){
@@ -62,5 +66,11 @@ public class FreeFinLogRepo {
 
     public LiveData<List<FreeFinUser>> getAllUsersbyId(int loggedInUserId) {
         return freefinDAO.getRecordsetUserId(loggedInUserId);
+    }
+
+    public void insert(Notifications notification) {
+            FreeFinDatabase.databaseWriteExecutor.execute(() -> {
+                notificationsDAO.insert(notification);
+            });
     }
 }
