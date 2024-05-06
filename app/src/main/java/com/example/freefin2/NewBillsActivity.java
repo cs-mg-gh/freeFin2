@@ -59,7 +59,7 @@ public class NewBillsActivity extends AppCompatActivity {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             LocalDateTime dueDate = LocalDateTime.parse(dueDateInput.getText().toString(), formatter);
             boolean isActive = isActiveSwitch.isChecked();
-            LocalDateTime lastPaidDate = null; // Assuming not used at creation
+            LocalDateTime lastPaidDate = null;
 
             Bills bill = new Bills(amount, dueDate, isActive, lastPaidDate);
             viewModel.insertBill(bill);
@@ -87,6 +87,7 @@ public class NewBillsActivity extends AppCompatActivity {
             dueDateInput.setText(selectedDate);
         }, year, month, day);
 
-        datePickerDialog.setCancelable(false); // Make dialog non-cancelable if desired
+        datePickerDialog.setCancelable(false);
     }
+
 }
