@@ -4,22 +4,27 @@
     android:layout_height="match_parent">
 
     <!-- Content Layout for Set Goal -->
+
+    <!-- Navigation Bar -->
     <LinearLayout
+        android:id="@+id/goal_content_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/navigation_bar"
+        android:layout_marginBottom="396dp"
+        android:gravity="center"
         android:orientation="vertical"
-        android:padding="16dp"
-        android:gravity="center">
+        android:padding="16dp">
 
         <!-- Title -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:text="Set Goal"
-            android:textSize="24sp"
             android:textColor="@android:color/black"
-            android:textStyle="bold"
-            android:layout_marginBottom="16dp"/>
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
         <!-- Goal Title -->
         <EditText
@@ -27,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Goal Title"
-            android:inputType="text"/>
+            android:inputType="text" />
 
         <!-- Goal Amount -->
         <EditText
@@ -35,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Goal Amount"
-            android:inputType="numberDecimal"/>
+            android:inputType="numberDecimal" />
 
         <!-- Goal Deadline -->
         <EditText
@@ -43,23 +48,55 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Goal Deadline (YYYY-MM-DD)"
-            android:inputType="date"/>
+            android:inputType="date" />
 
         <!-- Save Button -->
         <Button
             android:id="@+id/buttonSaveGoal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Save"
-            android:layout_marginTop="16dp"/>
+            android:layout_marginTop="16dp"
+            android:text="Save" />
 
         <!-- Cancel Button -->
         <Button
             android:id="@+id/buttonCancelGoal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cancel"
-            android:layout_marginTop="8dp"/>
+            android:layout_marginTop="8dp"
+            android:text="Cancel" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/navigation_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:background="@android:color/darker_gray"
+        android:padding="8dp">
+
+        <Button
+            android:id="@+id/home_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Home" />
+
+        <Button
+            android:id="@+id/set_goal_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Set Goal" />
+
+        <Button
+            android:id="@+id/settings_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Settings" />
 
     </LinearLayout>
 

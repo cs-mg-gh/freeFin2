@@ -2,10 +2,43 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:padding="16dp">
 
+    <!-- Navigation Bar included here -->
 
-    <!-- Navigation Bar -->
+    <LinearLayout
+        android:id="@+id/settings_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/navigation_bar"
+        android:layout_marginBottom="512dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Settings"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+        <Switch
+            android:id="@+id/switch_notifications"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="Enable Notifications" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            android:text="Select Theme" />
+
+        <Spinner
+            android:id="@+id/spinner_theme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
     <LinearLayout
         android:id="@+id/navigation_bar"
         android:layout_width="match_parent"
@@ -15,7 +48,6 @@
         android:background="@android:color/darker_gray"
         android:padding="8dp">
 
-        <!-- Navigation buttons -->
         <Button
             android:id="@+id/home_button"
             android:layout_width="0dp"
