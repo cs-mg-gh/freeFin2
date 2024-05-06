@@ -13,6 +13,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.freefin2.Database.entities.Bills;
 import com.example.freefin2.Database.entities.FreeFinUser;
+import com.example.freefin2.Database.entities.Goals;
 import com.example.freefin2.Database.entities.Notifications;
 import com.example.freefin2.Database.typeConverters.LocalDateTypeConverter;
 import com.example.freefin2.MainActivity;
@@ -21,13 +22,14 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @TypeConverters(LocalDateTypeConverter.class)
-@Database(entities={FreeFinUser.class, Bills.class, Notifications.class}, version = 2,exportSchema = false)
+@Database(entities={FreeFinUser.class, Bills.class, Notifications.class, Goals.class}, version = 3,exportSchema = false)
 public abstract class FreeFinDatabase extends RoomDatabase {
     public static final String FreeFinTable = "FreeFinTable";
     public static final String BillsTable ="BillsTable";
     public static final String NotificationsTable ="NotificationsTable";
 
     private static final String DATABASE_NAME ="FreeFinDatabase";
+    public static final String GoalsTable ="GoalsTable";
     private static volatile FreeFinDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS =4;
     static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
@@ -81,5 +83,6 @@ public abstract class FreeFinDatabase extends RoomDatabase {
     public abstract BillsDAO billsDAO();
 
     public abstract NotificationsDAO notificationsDAO();
+    public abstract GoalsDAO goalsDao();
 
 }

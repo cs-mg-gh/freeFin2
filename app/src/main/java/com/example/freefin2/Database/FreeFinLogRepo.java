@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.example.freefin2.Database.entities.Bills;
 import com.example.freefin2.Database.entities.FreeFinUser;
+import com.example.freefin2.Database.entities.Goals;
 import com.example.freefin2.Database.entities.Notifications;
 
 import java.util.List;
@@ -18,11 +19,15 @@ public class FreeFinLogRepo {
     public static volatile FreeFinLogRepo repository; // Use volatile for thread-safe singleton
     private final LiveData<List<FreeFinUser>> allUsers;
     private final LiveData<List<Bills>> allBills;
+    private GoalsDAO goalsDao;
+    private LiveData<List<Goals>> allGoals;
 
     private FreeFinLogRepo(Application application){
         FreeFinDatabase db = FreeFinDatabase.getDatabase(application);
         freefinDAO = db.freefinDAO();
         billsDAO = db.billsDAO();
+        goalsDao = db.goalsDao();
+        allGoals = goalsDao.getAllGoals();
         allUsers = freefinDAO.getAllUsers(); // This should be LiveData
         allBills = billsDAO.getAllBillsOrderedByDueDate();
         notificationsDAO = db.notificationsDAO();
@@ -72,5 +77,14 @@ public class FreeFinLogRepo {
             FreeFinDatabase.databaseWriteExecutor.execute(() -> {
                 notificationsDAO.insert(notification);
             });
+    }
+    public void insert(Goals goal) {
+        FreeFinDatabase.databaseWriteExecutor.execute(() -> {
+            goalsDao.insert(goal);
+        });
+    }
+
+    public LiveData<List<Goals>> getAllGoals() {
+        return allGoals;
     }
 }

@@ -1,4 +1,5 @@
 package com.example.freefin2;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -7,69 +8,86 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+
+import com.example.freefin2.Database.entities.Goals;
+import com.example.freefin2.viewHolder.FreeFinnViewModel;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class SetGoalActivity extends AppCompatActivity {
-
     private EditText editTextGoalTitle, editTextGoalAmount, editTextGoalDeadline;
+    private FreeFinnViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_goal);
 
+        // Initialize ViewModel
+        viewModel = new ViewModelProvider(this).get(FreeFinnViewModel.class);
+
         // Initialize EditText fields
         editTextGoalTitle = findViewById(R.id.editTextGoalTitle);
         editTextGoalAmount = findViewById(R.id.editTextGoalAmount);
         editTextGoalDeadline = findViewById(R.id.editTextGoalDeadline);
-    //
-        // Save Button
-        Button buttonSaveGoal = findViewById(R.id.buttonSaveGoal);
-        buttonSaveGoal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveGoal();
-            }
-        });
+        editTextGoalDeadline.setOnClickListener(v -> showDatePickerDialog());
 
-        // Cancel Button
+        Button buttonSaveGoal = findViewById(R.id.buttonSaveGoal);
+        buttonSaveGoal.setOnClickListener(v -> saveGoal());
+
         Button buttonCancelGoal = findViewById(R.id.buttonCancelGoal);
-        buttonCancelGoal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cancelGoal();
-            }
-        });
+        buttonCancelGoal.setOnClickListener(v -> finish());
     }
 
-    // Method to handle saving the goal
+    private void showDatePickerDialog() {
+        // Get the current date
+        LocalDate now = LocalDate.now();
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+                (view, year, monthOfYear, dayOfMonth) -> {
+                    // Adjust month indexing from DatePicker
+                    LocalDate date = LocalDate.of(year, monthOfYear + 1, dayOfMonth);
+                    // Format the date and set to EditText
+                    editTextGoalDeadline.setText(date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+                },
+                now.getYear(), now.getMonthValue() - 1, now.getDayOfMonth());
+
+        datePickerDialog.show();
+    }
+
     private void saveGoal() {
         String goalTitle = editTextGoalTitle.getText().toString().trim();
-        String goalAmount = editTextGoalAmount.getText().toString().trim();
-        String goalDeadline = editTextGoalDeadline.getText().toString().trim();
+        String goalAmountStr = editTextGoalAmount.getText().toString().trim();
+        String goalDeadlineStr = editTextGoalDeadline.getText().toString().trim();
 
-        // Perform validation
-        if (goalTitle.isEmpty() || goalAmount.isEmpty() || goalDeadline.isEmpty()) {
+        if (goalTitle.isEmpty() || goalAmountStr.isEmpty() || goalDeadlineStr.isEmpty()) {
             Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // Convert amount to double
-        double amount = Double.parseDouble(goalAmount);
+        double goalAmount;
+        try {
+            goalAmount = Double.parseDouble(goalAmountStr);
+        } catch (NumberFormatException e) {
+            Toast.makeText(this, "Invalid amount format", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        // Save goal to database or perform necessary action
-        // For demonstration, we just display a toast message
-        Toast.makeText(this, "Goal saved: " + goalTitle + " - $" + amount + " by " + goalDeadline, Toast.LENGTH_LONG).show();
+        LocalDateTime goalDeadline;
+        try {
+            goalDeadline = LocalDate.parse(goalDeadlineStr, DateTimeFormatter.ofPattern("dd/MM/yyyy")).atStartOfDay();
+        } catch (DateTimeParseException e) {
+            Toast.makeText(this, "Invalid date format. Please use dd/MM/yyyy", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        // Optionally, navigate back to landing page or any other activity
-        // Here we navigate back to the landing page
-        Intent intent = new Intent(this, LandingPageActivity.class);
-        startActivity(intent);
-        finish(); // Finish current activity to prevent going back to it using back button
-    }
+        Goals goal = new Goals(goalTitle, goalAmount, goalDeadline);
+        viewModel.insertGoal(goal);
 
-    // Method to handle canceling the goal action
-    private void cancelGoal() {
-        // Finish the activity to go back to the previous screen
+        Toast.makeText(this, "Goal saved successfully", Toast.LENGTH_LONG).show();
         finish();
     }
 }
