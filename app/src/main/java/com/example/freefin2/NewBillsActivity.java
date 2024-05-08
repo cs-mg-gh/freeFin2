@@ -61,7 +61,7 @@ public class NewBillsActivity extends AppCompatActivity {
             boolean isActive = isActiveSwitch.isChecked();
             LocalDateTime lastPaidDate = null; // Assuming not used at creation
 
-            Bills bill = new Bills(amount, dueDate.atStartOfDay(), isActive, lastPaidDate);
+            Bills bill = new Bills(amount, dueDate.atStartOfDay(), isActive);
             viewModel.insertBill(bill);
 
             Toast.makeText(this, "Bill saved successfully!", Toast.LENGTH_SHORT).show();
