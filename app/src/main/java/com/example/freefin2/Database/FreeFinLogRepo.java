@@ -8,6 +8,8 @@ import com.example.freefin2.Database.entities.Goals;
 import com.example.freefin2.Database.entities.Notifications;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import androidx.lifecycle.LiveData;
 
@@ -21,6 +23,7 @@ public class FreeFinLogRepo {
     private final LiveData<List<Bills>> allBills;
     private GoalsDAO goalsDao;
     private LiveData<List<Goals>> allGoals;
+    private ExecutorService executor = Executors.newFixedThreadPool(4);
 
     private FreeFinLogRepo(Application application){
         FreeFinDatabase db = FreeFinDatabase.getDatabase(application);
@@ -51,6 +54,9 @@ public class FreeFinLogRepo {
         FreeFinDatabase.databaseWriteExecutor.execute(() -> {
             freefinDAO.insertUser(users);
         });
+    }
+    void deleteUser() {
+        executor.execute(() -> freefinDAO.deleteAll());
     }
 
     public LiveData<FreeFinUser> getUserByUsername(String username) {
@@ -86,5 +92,8 @@ public class FreeFinLogRepo {
 
     public LiveData<List<Goals>> getAllGoals() {
         return allGoals;
+    }
+    public void deleteGoal(Goals goal) {
+        new Thread(() -> goalsDao.delete(goal)).start();
     }
 }

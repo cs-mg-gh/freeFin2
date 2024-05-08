@@ -22,8 +22,8 @@ import com.example.freefin2.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends AppCompatActivity {
 
-   // private static final String TAG = "LoginActivity";
-    private ActivityLoginBinding binding;
+    public ActivityLoginBinding binding;
+    // private static final String TAG = "LoginActivity";
     private FreeFinLogRepo repository;
 
     @SuppressLint("MissingInflatedId")

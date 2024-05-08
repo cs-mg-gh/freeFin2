@@ -48,7 +48,7 @@ public class SetGoalActivity extends AppCompatActivity {
         LocalDate now = LocalDate.now();
         DatePickerDialog datePickerDialog = new DatePickerDialog(this,
                 (view, year, monthOfYear, dayOfMonth) -> {
-                    // Adjust month indexing from DatePicker
+
                     LocalDate date = LocalDate.of(year, monthOfYear + 1, dayOfMonth);
                     // Format the date and set to EditText
                     editTextGoalDeadline.setText(date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));

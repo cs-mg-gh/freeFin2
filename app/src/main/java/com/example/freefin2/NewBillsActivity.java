@@ -22,6 +22,7 @@ import com.example.freefin2.Database.entities.FreeFinUser;
 import com.example.freefin2.viewHolder.FreeFinnViewModel;
 
 import java.text.BreakIterator;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -31,7 +32,7 @@ public class NewBillsActivity extends AppCompatActivity {
     private EditText amountInput, dueDateInput;
     private Switch isActiveSwitch;
     private Button saveButton;
-    private DatePickerDialog datePickerDialog; // Declare as a class member
+    private DatePickerDialog datePickerDialog;
     private FreeFinnViewModel viewModel;
 
     @Override
@@ -45,10 +46,9 @@ public class NewBillsActivity extends AppCompatActivity {
         isActiveSwitch = findViewById(R.id.isActiveSwitch);
         saveButton = findViewById(R.id.saveButton);
 
-        initDatePicker(); // Initialize the DatePickerDialog here
+        initDatePicker();
 
-        // Setting the click listener to the dueDateInput to show DatePickerDialog
-        dueDateInput.setOnClickListener(view -> datePickerDialog.show());
+        dueDateInput.setOnClickListener(view -> showDatePickerDialog());
 
         saveButton.setOnClickListener(view -> saveBill());
     }
@@ -57,11 +57,11 @@ public class NewBillsActivity extends AppCompatActivity {
         try {
             double amount = Double.parseDouble(amountInput.getText().toString());
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            LocalDateTime dueDate = LocalDateTime.parse(dueDateInput.getText().toString(), formatter);
+            LocalDate dueDate = LocalDate.parse(dueDateInput.getText().toString(), formatter);
             boolean isActive = isActiveSwitch.isChecked();
             LocalDateTime lastPaidDate = null; // Assuming not used at creation
 
-            Bills bill = new Bills(amount, dueDate, isActive, lastPaidDate);
+            Bills bill = new Bills(amount, dueDate.atStartOfDay(), isActive, lastPaidDate);
             viewModel.insertBill(bill);
 
             Toast.makeText(this, "Bill saved successfully!", Toast.LENGTH_SHORT).show();
@@ -74,19 +74,23 @@ public class NewBillsActivity extends AppCompatActivity {
     }
 
     private void initDatePicker() {
-        // Get today's date
-        Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        LocalDate now = LocalDate.now();
+        datePickerDialog = new DatePickerDialog(
+                this,
+                (view, year, monthOfYear, dayOfMonth) -> {
+                    LocalDate date = LocalDate.of(year, monthOfYear + 1, dayOfMonth);
+                    dueDateInput.setText(date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+                },
+                now.getYear(),
+                now.getMonthValue() - 1,
+                now.getDayOfMonth()
+        );
+    }
 
-        // Initialize DatePickerDialog
-        datePickerDialog = new DatePickerDialog(this, (view, year1, monthOfYear, dayOfMonth) -> {
-            // Set dueDateInput to show the selected date
-            String selectedDate = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year1;
-            dueDateInput.setText(selectedDate);
-        }, year, month, day);
-
-        datePickerDialog.setCancelable(false); // Make dialog non-cancelable if desired
+    private void showDatePickerDialog() {
+        if (datePickerDialog == null) {
+            initDatePicker();
+        }
+        datePickerDialog.show();
     }
 }

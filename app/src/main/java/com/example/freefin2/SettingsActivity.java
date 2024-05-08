@@ -32,17 +32,14 @@ public class SettingsActivity extends AppCompatActivity {
         spinnerTheme.setAdapter(adapter);
 
         homeButton.setOnClickListener(v -> {
-            // Intent to navigate to the Home activity
             startActivity(new Intent(SettingsActivity.this, LandingPageActivity.class));
         });
 
         setGoalButton.setOnClickListener(v -> {
-            // Intent to navigate to the Set Goal activity
             startActivity(new Intent(SettingsActivity.this, SetGoalActivity.class));
         });
 
         settingsButton.setOnClickListener(v -> {
-            // Refresh the Settings activity or use finish() if no need to reload
             startActivity(new Intent(SettingsActivity.this, SettingsActivity.class));
             finish();
         });
@@ -50,13 +47,9 @@ public class SettingsActivity extends AppCompatActivity {
 
     }
     private void loadSettings() {
-        // Load settings from SharedPreferences or another persistent storage
-        // For example, you might check if notifications are enabled:
-        boolean notificationsEnabled = true; // This should come from SharedPreferences
+        boolean notificationsEnabled = true;
         switchNotifications.setChecked(notificationsEnabled);
-
-        // Similarly, set the selected theme in the spinner
-        int themePosition = 0; // This should be loaded from SharedPreferences
+        int themePosition = 0;
         spinnerTheme.setSelection(themePosition);
     }
 }

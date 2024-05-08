@@ -11,7 +11,7 @@
     <string name="t">Create_Account</string>
     <string name="sign_up">Sign Up!</string>
     <string name="preference_file_key">FreefinnSharedPreferenceKey</string>
-    <string name="preference_usedId_key">FreefinnUserIDsharedpreferenceKey</string>
+    <string name="preference_usedId_key">username</string>
     <string name="account_balance">Account Balance</string>
     <string name="_0_00">$0.00</string>
     <string name="transaction_summary">Transaction Summary</string>
@@ -32,6 +32,18 @@
     <string name="savee">Save</string>
     <string name="target_amount">Target Amount</string>
     <string name="title">Title</string>
+    <string name="set_goall">Set Goal</string>
+    <string name="goal_titlee">Goal Title</string>
+    <string name="goal_amountt">Goal Amount</string>
+    <string name="goal_deadlinee">Goal Deadline</string>
+    <string name="saveee">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="admin_settings">Admin Settings</string>
+    <string name="delete_user">Delete User</string>
+    <string name="logoutt">Logout</string>
+    <string name="create_accountt">Create Account</string>
+    <string name="balance_hint">balane hint</string>
+    <string name="saveeee">save</string>
     <string-array name="theme_options">
         <item>Light</item>
         <item>Dark</item>

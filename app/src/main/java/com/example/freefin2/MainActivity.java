@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Start LoginActivity
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
             }
         });
@@ -66,32 +65,35 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, CreateAccountActivity.class));
             }
         });
+        logout();
     }
 
-    private void loginUser( Bundle savedInstanceState) {
-        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(getString(R.string.preference_file_key),Context.MODE_PRIVATE);
+    private void loginUser(Bundle savedInstanceState) {
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        loggedInUserId = sharedPreferences.getInt(getString(R.string.preference_usedId_key), LOGGED_OUT);
 
-        //if (sharedPreferences.contains(SHARED_PREFERENCE_USERID_VALUE)) {
-            loggedInUserId = sharedPreferences.getInt(getString(R.string.preference_usedId_key),LOGGED_OUT);
-            //LiveData<FreeFinUser> userObserver = repository.getUserById(loggedInUserId);
-            //userObserver.observe(this, this::updateUser); // Handling user update in a method
-        //}
-        if (loggedInUserId == LOGGED_OUT & savedInstanceState != null && savedInstanceState.containsKey(SAVED_INSTANCE_STATE_USERID_KEY)) {
+        if (loggedInUserId == LOGGED_OUT && savedInstanceState != null) {
             loggedInUserId = savedInstanceState.getInt(SAVED_INSTANCE_STATE_USERID_KEY, LOGGED_OUT);
         }
-        if(loggedInUserId == LOGGED_OUT){
+
+        if (loggedInUserId == LOGGED_OUT) {
             loggedInUserId = getIntent().getIntExtra(MAIN_ACTIVITY_USER_ID, LOGGED_OUT);
         }
-        if(loggedInUserId == LOGGED_OUT){
-            return;
+
+        if (loggedInUserId != LOGGED_OUT) {
+            LiveData<FreeFinUser> userObserver = repository.getUserById(loggedInUserId);
+            userObserver.removeObservers(this); // Remove previous observers to prevent multiple triggers
+            userObserver.observe(this, user -> {
+                this.user = user;
+                if (this.user != null) {
+                    invalidateOptionsMenu();
+                }
+            });
+        } else {
+            Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
+            startActivity(intent);
+            finish();
         }
-        LiveData<FreeFinUser> userObserver = repository.getUserById(loggedInUserId);
-        userObserver.observe(this,user ->{
-            this.user = user;
-            if(this.user != null){
-                invalidateOptionsMenu();
-            }
-        });
     }
     private void updateUser(FreeFinUser newUser) {
         user = newUser;
@@ -161,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
         alertBuilder.create().show();
     }
 
-    private void logout() {
+    public void logout() {
 
         loggedInUserId = LOGGED_OUT;
         updateSharedPreferences();

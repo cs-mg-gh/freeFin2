@@ -4,7 +4,12 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-
+    <EditText
+        android:id="@+id/balanceInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/balance_hint"
+        android:inputType="numberDecimal"/>
     <!-- Navigation Bar -->
     <LinearLayout
         android:id="@+id/navigation_bar"

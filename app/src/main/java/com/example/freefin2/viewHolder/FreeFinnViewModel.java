@@ -30,6 +30,7 @@ public class FreeFinnViewModel extends AndroidViewModel {
         allBills = repository.getAllBills(); // Now safe to call
         allGoals = repository.getAllGoals();
     }
+
     public void insertUser(FreeFinUser user) {
         new Thread(() -> {
             try {
@@ -70,5 +71,15 @@ public class FreeFinnViewModel extends AndroidViewModel {
 
     public void insertGoal(Goals goal) {
         repository.insert(goal);
+    }
+
+    public void deleteUser() {
+    }
+    public void deleteGoal(Goals goal) {
+        repository.deleteGoal(goal);
+    }
+
+    public LiveData<Object> getUsers() {
+        return getUsers();
     }
 }

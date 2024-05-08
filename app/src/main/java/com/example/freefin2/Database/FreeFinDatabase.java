@@ -33,6 +33,35 @@ public abstract class FreeFinDatabase extends RoomDatabase {
     private static volatile FreeFinDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS =4;
     static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
+    public static synchronized FreeFinDatabase getInstance(Context context) {
+        if (INSTANCE == null) {
+            INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
+                            FreeFinDatabase.class, "FreeFinDatabase")
+                    .fallbackToDestructiveMigration()
+                    .addCallback(addDefaultValues)
+                    .build();
+        }
+        return INSTANCE;
+    }
+    private static final RoomDatabase.Callback addDefaultValues = new RoomDatabase.Callback() {
+        @Override
+        public void onCreate(@NonNull SupportSQLiteDatabase db) {
+            super.onCreate(db);
+            Log.i("FreeFin", "Database is created!");
+            databaseWriteExecutor.execute(() -> {
+                FreeFinDao dao = INSTANCE.freefinDAO();
+                dao.deleteAll();
+                FreeFinUser admin = new FreeFinUser("admin", "admin1");
+                admin.setAdmin(true);
+                dao.insertUser(admin);
+
+                FreeFinUser testUser1 = new FreeFinUser("testuser1", "testuser1");
+                dao.insertUser(testUser1);
+
+                Log.i("FreeFin", "Default users inserted.");
+            });
+        }
+    };
 
     static FreeFinDatabase getDatabase(final Context context){
         if(INSTANCE==null){
@@ -51,32 +80,7 @@ public abstract class FreeFinDatabase extends RoomDatabase {
         }
         return INSTANCE;
     }
-    private static final RoomDatabase.Callback addDefaultValues = new RoomDatabase.Callback(){
-        @Override
-        public void onCreate(@NonNull SupportSQLiteDatabase db){
-            super.onCreate(db);
-            Log.i(MainActivity.TAG,"Database is created!");
-            databaseWriteExecutor.execute(()->{
-                FreeFinDao dao =INSTANCE.freefinDAO();
-                dao.deleteAll();
-                FreeFinUser admin = new FreeFinUser("admin","admin1");
-                admin.setAdmin(true);
-                dao.insertUser(admin);
 
-                FreeFinUser testUser1 = new FreeFinUser("testuser1","testuser1");
-                dao.insertUser(testUser1);
-
-            });
-        }
-    };
-        public static synchronized FreeFinDatabase getInstance(Context context) {
-            if (INSTANCE == null) {
-                INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                                FreeFinDatabase.class, "FreeFin_Database")
-                        .build();
-            }
-            return INSTANCE;
-        }
 
     public abstract FreeFinDao freefinDAO();
 

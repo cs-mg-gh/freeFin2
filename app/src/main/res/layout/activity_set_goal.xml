@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <!-- Content Layout for Set Goal -->
-
-    <!-- Navigation Bar -->
+    android:layout_height="match_parent"
+    android:background="@drawable/background_gradiant">
     <LinearLayout
         android:id="@+id/goal_content_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="756dp"
         android:layout_above="@+id/navigation_bar"
-        android:layout_marginBottom="396dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="75dp"
+        android:layout_marginBottom="-4dp"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="16dp">
@@ -21,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:text="Set Goal"
+            android:text="@string/set_goall"
             android:textColor="@android:color/black"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -31,7 +30,7 @@
             android:id="@+id/editTextGoalTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Goal Title"
+            android:hint="@string/goal_titlee"
             android:inputType="text" />
 
         <!-- Goal Amount -->
@@ -39,7 +38,7 @@
             android:id="@+id/editTextGoalAmount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Goal Amount"
+            android:hint="@string/goal_amountt"
             android:inputType="numberDecimal" />
 
         <!-- Goal Deadline -->
@@ -47,28 +46,27 @@
             android:id="@+id/editTextGoalDeadline"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Goal Deadline"
-            android:focusable="false"
             android:clickable="true"
             android:cursorVisible="false"
-            android:inputType="none"
-            android:drawableEnd="@drawable/ic_calendar" />
+            android:drawableEnd="@drawable/ic_calendar"
+            android:focusable="false"
+            android:hint="@string/goal_deadlinee"
+            android:inputType="none" />
 
-        <!-- Save Button -->
         <Button
             android:id="@+id/buttonSaveGoal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Save" />
+            android:text="@string/saveee" />
 
-        <!-- Cancel Button -->
         <Button
             android:id="@+id/buttonCancelGoal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Cancel" />
+            android:text="@string/cancel" />
+
 
     </LinearLayout>
 
